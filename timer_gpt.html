@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Page</title>
+</head>
+<body>
+
+<h2>타이머 설정</h2>
+
+<label for="dateInput">날짜 입력:</label>
+<input type="datetime-local" id="dateInput">
+
+<button onclick="startTimer()">타이머 시작</button>
+<button onclick="stopTimer()">타이머 중지</button>
+
+<p id="timerDisplay">남은 시간: 00:00:00</p>
+
+<script>
+    let timer;
+    let targetDate;
+
+    function startTimer() {
+        const inputDate = new Date(document.getElementById('dateInput').value);
+        targetDate = inputDate.getTime();
+
+        updateTimer();
+
+        timer = setInterval(updateTimer, 1000);
+    }
+
+    function stopTimer() {
+        clearInterval(timer);
+        document.getElementById('timerDisplay').textContent = '타이머 중지';
+    }
+
+    function updateTimer() {
+        const currentDate = new Date().getTime();
+        const difference = targetDate - currentDate;
+
+        if (difference <= 0) {
+            clearInterval(timer);
+            document.getElementById('timerDisplay').textContent = '타이머 종료';
+            return;
+        }
+
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById('timerDisplay').textContent = `남은 시간: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+</script>
+
+</body>
+</html>
+
