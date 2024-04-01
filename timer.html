@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function startTime() {
+    var today = new Date();
+
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; 
+	var yyyy = today.getFullYear();
+
+	if(dd<10) {
+		dd='0'+dd
+	} 
+	if(mm<10) {
+		mm='0'+mm
+	} 
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('clock').innerHTML = "시계 <br>"+yyyy + "-" + mm + "-" + dd + " " + h + ":" + m + ":" + s;
+    setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i}; 
+    return i;
+}
+</script>
+</head>
+
+<body onload="startTime()">
+<div id="clock" style="border: 1px solid; text-align: center;font-size: 20px;width: 300px; margin-right: auto; margin-left: auto;"></div>
+</body>
+</html>
